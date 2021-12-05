@@ -8,6 +8,9 @@ const mongoose = require('mongoose')
 // folder Declearation
 const middleware = require('./Middleware/errorMiddleware')
 
+//routes Declearations
+const authApi = require('./routes/auth.routes')
+
 //Declearations
 dotenv.config()
 
@@ -22,12 +25,16 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// routes initializations
+app.use('api/v1', authApi)
+
 //middleware handler
 app.use(middleware.errorHandler)
 app.use(middleware.notFound)
 
 mongoose
 	.connect(process.env.Mongo_Uri)
+	// eslint-disable-next-line no-unused-vars
 	.then((_result) => {
 		app.listen(port, () => {
 			console.log(`server in listerning on ${port}`)
