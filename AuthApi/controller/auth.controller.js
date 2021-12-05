@@ -29,5 +29,10 @@ exports.signup = (request, response, next) => {
 			})
 			return user.save()
 		})
-		.then(result)
+		.then((result) => {
+			response.status(201).json({
+				message: 'New User Created',
+				userDataId: result._id,
+			})
+		})
 }
