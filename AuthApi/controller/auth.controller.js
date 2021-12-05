@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
+// eslint-disable-next-line no-unused-vars
 const jwt = require('jsonwebtoken')
 
 // folder Declearation
@@ -34,5 +35,11 @@ exports.signup = (request, response, next) => {
 				message: 'New User Created',
 				userDataId: result._id,
 			})
+		})
+		.catch((error) => {
+			if (!errors.statusCode) {
+				errors.statusCode = 500
+			}
+			next(error)
 		})
 }
